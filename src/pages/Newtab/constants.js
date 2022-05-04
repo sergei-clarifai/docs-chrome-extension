@@ -1,54 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import unified from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypeReact from "rehype-react";
-import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";
-
-import { useMyContextState } from '../context';
-
-const RehypeComponentsList = {
-  table: (props) => {
-    return <table
-        style={{ border: '#AAA 1px solid', borderRadius: 5 }}
-      >
-        {props.children}
-      </table>;
-  },
-  a: (props) => {
-    return <a href={props.href}>
-      {props.children}
-    </a>;
-  }
-};
-
-function compile(val) {
-  const processor = unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype, null, {
-      handlers: Object.assign({}),
-      allowDangerousHTML: true
-    })
-    .use(rehypeRaw)
-    .use(rehypeReact, {
-      createElement: React.createElement,
-      components: RehypeComponentsList
-    });
-
-  const ast = processor.runSync(processor.parse(val));
-
-  return {
-    ast,
-    contents: processor.stringify(ast)
-  };
-}
-
-export default function MarkDown() {
-  const state = useMyContextState();
-  const { contents, ast } = compile(    `
+export const markdown = `
 # Organizing Media Components
 
 <!-- TOC -->
@@ -103,21 +53,5 @@ functionality to the platform.
 any callbacks needed to manipulate it (update, reset, etc).
 
 * The media component as well as the tool's UI are able to
-read/write from/to the zoom state.`
-  );
-  return (
-    <div
-      style={{
-        border: "#f00 1px solid",
-        overflow: 'auto',
-        width: '600px',
-        height: 300,
-        flex: 1,
-        padding: 10
-      }}
-    >
-      {contents}
-    </div>
-  );
-}
+read/write from/to the zoom state.`;
 

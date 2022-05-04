@@ -14,6 +14,12 @@
   "icons": {
     "128": "icon-128.png"
   },
+  "permissions": [
+    "storage",
+    "https://clarifai.atlassian.net//",
+    "https://api.github.com//",
+    "identity"
+  ],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
@@ -27,5 +33,16 @@
       "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],
       "matches": []
     }
-  ]
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7RfOZ6ZYPS482cCeuq9IUeiSWeLDZkeJ0o0XR9nNHKN+icbIU5mxi8kWwmdB8+At1cWn2RISeuCQFXD+1UlC25vpi68BSDmiK6F2zxxk/On2PjATZw2XLooGNB1hL1dTAWz2wwrZHUcv3JpCw2VajFVBv5kY9PWZ3vonMBOO6PasC6ffZdnJUvrW053aBe/Moiv0uLj7ybMUBTMWYYrz0iNQLS7H9qXZ/L5Qvf2oMASroUpEzDN9wfsG0K1eyfU8QCvIllFvLvtU5IMOOcM+0kcSMmGfiNABKKxapP/Tqh0kpQtKDl1Qb1fyb9yf9vndcpcL/Rc4sCgI5VnP4QFltwIDAQAB",
+  "oauth2": {
+    "client_id": "800645088831-a7qu4ojmi282p0df7nkp8tani4neidb5.apps.googleusercontent.com",
+    "scopes":[
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/spreadsheets",
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.appdata"
+    ]
+  },
+  "content_security_policy": "script-src 'self' https://apis.google.com/; object-src 'self'"
 }

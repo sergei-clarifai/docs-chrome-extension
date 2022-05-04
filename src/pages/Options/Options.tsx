@@ -1,18 +1,26 @@
-import React from 'react';
-import Logo from '../../assets/img/clarifai-logo.jpeg';
+import React, { useState, useEffect } from 'react';
+// import Logo from '../../assets/img/clarifai-logo.jpeg';
 import '../../assets/styles/tailwind.css';
 import './Options.css';
 
+import { loadFromLocal, saveToLocal } from '../../utils/localStorage';
 interface Props {
   title: string;
 }
 
 const Options: React.FC<Props> = ({ title }: Props) => {
+  const [formState, setFormState] = useState({ username: '', token: '' });
+
+  useEffect(() => {
+    const githubConfig = loadFromLocal('github');
+    setFormState(githubConfig);
+  }, []);
+
   return (
     <>
       <div className="relative z-10 max-w-3xl mx-auto mt-3 px-5 py-5 text-slate-800">
         <h1 className="text-4xl font-medium mb-10 flex items-end">
-          <img className="relative mr-2 w-40" src={Logo} alt="" id="logo" />
+          {/* <img className="relative mr-2 w-40" src={Logo} alt="" id="logo" /> */}
           - Internal Docs Tool
         </h1>
 
@@ -47,15 +55,39 @@ const Options: React.FC<Props> = ({ title }: Props) => {
           <div className="w-full pl-6" id="tab-contents">
             <section id="github-view">
               <div className="p-4 w-full bg-white rounded-lg sm:p-6 lg:p-8">
-                <form className="space-y-6" action="#">
+                <form className="space-y-6" action="#" onSubmit={(event: React.FormEvent) => {
+                  event.preventDefault();
+                  const githubConfig = loadFromLocal('github');
+                  
+                  const elements = (event.target as HTMLFormElement).elements as (HTMLFormControlsCollection & {username: HTMLFormElement; token: HTMLFormElement});
+
+                  saveToLocal('github', {
+                    ...githubConfig,
+                    username: elements.username.value,
+                    token: elements.token.value,
+                  });
+                }}>
                     <h5 className="text-xl font-medium text-gray-900">Enter your Credentials</h5>
                     <div>
                       <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Your GitHub Username</label>
-                      <input type="text" id="githubUsernameInput" name="username" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                      <input
+                        type="text"
+                        id="githubUsernameInput"
+                        name="username"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        required
+                        defaultValue={formState.username}
+                      />
                     </div>
                     <div>
                       <label htmlFor="token" className="block mb-2 text-sm font-medium text-gray-900">Your GitHub Token</label>
-                      <input type="text" id="githubTokenInput" name="token" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                      <input 
+                        type="text"
+                        defaultValue={formState.token}
+                        id="githubTokenInput"
+                        name="token"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        required />
                     </div>
 
                     <button id="saveBtn" type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save Token</button>
