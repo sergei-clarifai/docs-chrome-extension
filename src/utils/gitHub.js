@@ -71,9 +71,8 @@ export async function fetchFolderFiles(
     return [];
   }
 
-  const giturl = `https://api.github.com/repos/${userName}/${repoName}/contents/${path}${
-    ref ? `?ref=${ref}` : ''
-  }`;
+  const giturl = `https://api.github.com/repos/${userName}/${repoName}/contents/${path}${ref ? `?ref=${ref}` : ''
+    }`;
 
   const reponse = await fetchGitHub(giturl);
   let result = [];
@@ -117,7 +116,7 @@ export async function getDocsFromGithub() {
     return [];
   }
 
-  if (true || !cachedFileList || !cachedFileList.length) {
+  if (!cachedFileList || !cachedFileList.length) {
     const filenames = await fetchFolderFiles(
       userName,
       repoName,

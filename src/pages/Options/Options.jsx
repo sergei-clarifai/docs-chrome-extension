@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-// import Logo from '../../assets/img/clarifai-logo.jpeg';
+import Logo from '../../assets/img/clarifai-logo.jpeg';
 import '../../assets/styles/tailwind.css';
 import './Options.css';
 
 import { loadFromLocal, saveToLocal } from '../../utils/localStorage';
-// interface Props {
-//   title: string;
-// }
 
 const Options = ({ title }) => {
   const [formState, setFormState] = useState({ username: '', token: '' });
@@ -20,7 +17,7 @@ const Options = ({ title }) => {
     <>
       <div className="relative z-10 max-w-3xl mx-auto mt-3 px-5 py-5 text-slate-800">
         <h1 className="text-4xl font-medium mb-10 flex items-end">
-          {/* <img className="relative mr-2 w-40" src={Logo} alt="" id="logo" /> */}
+          <img className="relative mr-2 w-40" src={Logo} alt="" id="logo" />
           - Internal Docs Tool
         </h1>
 

@@ -1,23 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import './Newtab.css';
-import './Newtab.scss';
+import React from 'react';
+import { Navbar } from '../../components/Navbar/Navbar';
 import { GithubFiles } from '../../containers/GithubFiles';
 import { GoogleDriveFiles } from '../../containers/GoogleDriveFiles';
-import { listFiles } from '../../utils/drive';
-// import { markdown } from './constants';
-
+import { CarouselList } from '../../components/CarouselList/CarouselList';
+import './Newtab.css';
+import './Newtab.scss';
 
 
 const Newtab = () => {
   return (
-    <div style={{
-        boxSizing: 'border-box',
-        padding: 10,
-      }}
-    >
-      <GoogleDriveFiles  folderIds={['1bviyV6Gh3cFppFNu4hC5MQoCi2pas502', '1ugZjUFj2JM2Y4rOBHH9byVaOceaH3CyJ']} />
-      <GithubFiles />
-    </div>
+    <>
+      <Navbar />
+      <div className='relative max-w-7xl px-3 mx-auto'>
+        <GoogleDriveFiles
+          category="Engineering"
+          heading="Engineering Goodies - Season #1"
+          description="All episodes of Clarifai's Engineering Goodies in 2021"
+          folderIds={['1bviyV6Gh3cFppFNu4hC5MQoCi2pas502']}
+        />
+
+        <GoogleDriveFiles
+          category="Engineering"
+          heading="Engineering Goodies - Season #2"
+          description="All episodes of Clarifai's Engineering Goodies in 2022"
+          folderIds={['1ugZjUFj2JM2Y4rOBHH9byVaOceaH3CyJ']}
+        />
+
+        <GithubFiles />
+      </div>
+    </>
   );
 };
 

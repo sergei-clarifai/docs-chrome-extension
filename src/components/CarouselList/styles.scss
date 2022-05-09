@@ -1,0 +1,30 @@
+.carousel {
+  &-list {
+    padding: 2rem;
+  }
+
+  &-item-wrapper {
+    margin-right: 10px;
+  }
+
+  &-item {
+    background: white;
+    box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.2);
+    border-radius: 0.75rem;
+    margin: 0 1rem;
+    height: 15rem;
+    max-width: 30rem;
+    overflow: hidden;
+  }
+
+  .content {
+    padding: 2rem;
+    z-index: 1;
+    position: relative;
+    color: white;
+  }
+
+  h1 {
+    color: white;
+  }
+}

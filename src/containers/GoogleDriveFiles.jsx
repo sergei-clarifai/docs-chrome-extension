@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
+import { CarouselList } from '../components/CarouselList/CarouselList';
 import { listFiles } from '../utils/drive';
+import '../assets/styles/tailwind.css';
 
 const API_KEY = 'AIzaSyAZkK2rXKZ-BbfJ3MyE3eM_mB-cORFwqHU';
 const DISCOVERY_DOCS = [
@@ -81,6 +82,9 @@ const useGoogle = () => {
 };
 
 export const GoogleDriveFiles = ({
+  category,
+  heading,
+  description,
   folderIds,
 }) => {
   const [driveFiles, setDriveFiles] = useState((folderIds || []).reduce((acc, folderId) => {
@@ -107,34 +111,35 @@ export const GoogleDriveFiles = ({
   console.log('XXX driveReady:', driveReady);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-      }}
-    >
+    <div className='gdrive-carousel-wrapper padding'>
+      <div className="flex-auto max-w-4xl">
+        <p className="text-sm leading-6 font-semibold text-sky-500">{category}</p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">{heading}</h1>
+        <p className="mt-1 text-lg text-slate-700 dark:text-slate-400">{description}</p>
+      </div>
       {(folderIds || []).map((folderId) => (
-        <div
-          style={{
-            display: 'flex',
-            gap: 10,
-          }}
-        >
-      {driveFiles[folderId].map((file) => 
-        <div style={{
-          flex: 1,
-        }}>
-          <a href={file.webViewLink}>
-            {file.name}
-          </a>
-          <br />
-          <img src={file.thumbnailLink} />
-        </div>
-      )}
-        </div>))}
-      
-    
+        <CarouselList>
+          {driveFiles[folderId].map((file) => (
+            <a
+              className='block'
+              href={file.webViewLink}
+              style={{
+                background: `url(${file.thumbnailLink}) 100% no-repeat`,
+                minHeight: '100%',
+                minWidth: '100%',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '100%',
+              }}
+              >
+              <div className='content p-4'>
+                <h1 className='mt-1 text-lg text-white'>{file.name}</h1>
+                <br />
+                {/* <img src={file.thumbnailLink} alt="thumbnail-elm" /> */}
+              </div>
+            </a>
+          ))}
+        </CarouselList>
+      ))}
     </div>
   );
 };
