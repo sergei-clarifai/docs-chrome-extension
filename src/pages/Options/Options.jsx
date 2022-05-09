@@ -4,11 +4,11 @@ import '../../assets/styles/tailwind.css';
 import './Options.css';
 
 import { loadFromLocal, saveToLocal } from '../../utils/localStorage';
-interface Props {
-  title: string;
-}
+// interface Props {
+//   title: string;
+// }
 
-const Options: React.FC<Props> = ({ title }: Props) => {
+const Options = ({ title }) => {
   const [formState, setFormState] = useState({ username: '', token: '' });
 
   useEffect(() => {
@@ -55,11 +55,12 @@ const Options: React.FC<Props> = ({ title }: Props) => {
           <div className="w-full pl-6" id="tab-contents">
             <section id="github-view">
               <div className="p-4 w-full bg-white rounded-lg sm:p-6 lg:p-8">
-                <form className="space-y-6" action="#" onSubmit={(event: React.FormEvent) => {
+                <form className="space-y-6" action="#" onSubmit={(event) => {
                   event.preventDefault();
                   const githubConfig = loadFromLocal('github');
                   
-                  const elements = (event.target as HTMLFormElement).elements as (HTMLFormControlsCollection & {username: HTMLFormElement; token: HTMLFormElement});
+                  // const elements = (event.target as HTMLFormElement).elements as (HTMLFormControlsCollection & {username: HTMLFormElement; token: HTMLFormElement});
+                  const elements = event.target.elements;
 
                   saveToLocal('github', {
                     ...githubConfig,

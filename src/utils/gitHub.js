@@ -3,14 +3,16 @@ import { loadFromLocal } from './localStorage';
 const { username: githubUsername, token: githubToken } =
   loadFromLocal('github');
 
-function authenticateUser(user: string, password: string) {
+console.log('githubUsername, githubToken:', githubUsername, githubToken);
+
+function authenticateUser(user, password) {
   const token = user + ':' + password;
   const hash = btoa(token);
 
   return 'Basic ' + hash;
 }
 
-export function fetchGitHub(giturl: string) {
+export function fetchGitHub(giturl) {
   return fetch(giturl, {
     method: 'GET',
     mode: 'cors',
@@ -21,7 +23,7 @@ export function fetchGitHub(giturl: string) {
   }).then((response) => response.json());
 }
 
-export function postGitHub(giturl: string, body: any) {
+export function postGitHub(giturl, body) {
   return fetch(giturl, {
     body: JSON.stringify(body),
     method: 'POST',
@@ -32,7 +34,7 @@ export function postGitHub(giturl: string, body: any) {
   }).then((response) => response.json());
 }
 
-function b64EncodeUnicode(str: string) {
+function b64EncodeUnicode(str) {
   // first we use encodeURIComponent to get percent-encoded UTF-8,
   // then we convert the percent encodings into raw bytes which
   // can be fed into btoa.
@@ -46,7 +48,7 @@ function b64EncodeUnicode(str: string) {
   );
 }
 
-function b64DecodeUnicode(str: string) {
+function b64DecodeUnicode(str) {
   // Going backwards: from bytestream, to percent-encoding, to original string.
   return decodeURIComponent(
     atob(str)
@@ -64,16 +66,14 @@ export async function fetchFolderFiles(
   path,
   ref,
   fetchContent = true
-): any {
-  if (githubUsername && githubToken) {
+) {
+  if (!githubUsername && !githubToken) {
     return [];
   }
 
   const giturl = `https://api.github.com/repos/${userName}/${repoName}/contents/${path}${
     ref ? `?ref=${ref}` : ''
   }`;
-
-  console.log('XXX fetchFolderFiles giturl:', giturl);
 
   const reponse = await fetchGitHub(giturl);
   let result = [];
@@ -98,8 +98,6 @@ export async function fetchFolderFiles(
     }
   }
 
-  console.log('XXX fetchFolderFiles result:', result);
-
   return result;
 }
 
@@ -113,7 +111,13 @@ export async function getDocsFromGithub() {
 
   let cachedFileList = localStorage[localStorageKey];
 
-  if (false || !cachedFileList || !cachedFileList.length) {
+  console.log('BEFORE NO GITHUB CREDENTIALS');
+  if (!githubUsername && !githubToken) {
+    console.log('NO GITHUB CREDENTIALS');
+    return [];
+  }
+
+  if (true || !cachedFileList || !cachedFileList.length) {
     const filenames = await fetchFolderFiles(
       userName,
       repoName,
@@ -125,9 +129,6 @@ export async function getDocsFromGithub() {
     localStorage.setItem(localStorageKey, JSON.stringify(filenames));
 
     cachedFileList = JSON.stringify(filenames);
-    console.log('XXX TRUE');
-  } else {
-    console.log('XXX FALSE');
   }
 
   const docsFileNames = JSON.parse(cachedFileList).filter(({ name }) =>
