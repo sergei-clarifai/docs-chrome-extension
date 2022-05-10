@@ -28,26 +28,12 @@ const Newtab = () => {
     <div className='box-border pb-20'>
       <Navbar />
       <div className='max-w-screen-2xl mx-auto px-10 relative z-10'>
-      <SliderContainer
-        title={'Front End Forum'}
-        category="frontendforum"
-        description="All topics of Fron-end Forum"
-      >
-        <AtlassianData />
-      </SliderContainer>
         <SliderContainer
-          category="engineering"
-          title={'Engineering Goodies Season #1'}
-          description="All episodes of Clarifai's Engineering Goodies in 2021"
+          title={'Front End Forum'}
+          category="frontendforum"
+          description="All topics of Front-end Forum"
         >
-          <GoogleDriveFiles folderIds={['1bviyV6Gh3cFppFNu4hC5MQoCi2pas502']} />
-        </SliderContainer>
-        <SliderContainer
-          category="engineering"
-          title={'Engineering Goodies Season #2'}
-          description="All episodes of Clarifai's Engineering Goodies in start of 2022"
-        >
-          <GoogleDriveFiles folderIds={['1ugZjUFj2JM2Y4rOBHH9byVaOceaH3CyJ']} />
+          <AtlassianData />
         </SliderContainer>
         <SliderContainer
           category="engineering"
@@ -55,6 +41,13 @@ const Newtab = () => {
           description="All episodes of Clarifai's Engineering Goodies in late 2022"
         >
           <GoogleDriveFiles folderIds={['1H1ZbBNa8uDkeHUbXNfHFa-i3SQkdOv4J']} />
+        </SliderContainer>
+        <SliderContainer
+          category="engineering"
+          title={'Engineering Goodies Season #3'}
+          description="All episodes of Clarifai's Engineering Goodies in start of 2022"
+        >
+          <GoogleDriveFiles folderIds={['1z9GeAGZjdSSxaBXzg3XPzBnjmcnPZjW1']} />
         </SliderContainer>
         <GithubFiles />
       </div>
