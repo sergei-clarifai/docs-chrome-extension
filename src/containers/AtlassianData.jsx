@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import cx from 'classnames';
+import parse from 'html-react-parser';
+import { IconInfo } from '../components/Icons/IconInfo';
 import { atlassianSearchContent, atlassianSearch } from '../utils/atlassian';
 import { getFileById } from '../utils/drive';
-import parse from 'html-react-parser';
-
 import { useGoogle } from './GoogleDriveFiles';
 
 export const AtlassianData = () => {
   const [items, setItems] = useState([]);
   const [thumbnails, setThumbnails] = useState({});
   const [createdBy, setCreatedBy] = useState({});
+  const [createdDate, setCreatedDate] = useState({});
   const driveReady = useGoogle();
 
   useEffect(() => {
@@ -35,6 +37,10 @@ export const AtlassianData = () => {
               setCreatedBy((oldState) => ({
                 ...oldState,
                 [idx]: r.results[0].history.createdBy,
+              }));
+              setCreatedDate((oldState) => ({
+                ...oldState,
+                [idx]: new Date(r.results[0].history.createdDate).toLocaleDateString(),
               }));
             }
           }).catch((e) => {
@@ -94,32 +100,49 @@ export const AtlassianData = () => {
     //       });
     //   });
   }, [driveReady]);
+
+  const formatDate = useCallback((dateTimestamp) => {
+    // source: https://stackoverflow.com/a/69737382
+    // The Swedish locale uses the format "yyyy-mm-dd":
+    const dateFormatter = Intl.DateTimeFormat('sv-SE');
+    return dateFormatter.format(dateTimestamp);
+  }, []);
   
   return (
     <>
-      {
-        items.map(({ title, description, googleId, idx }) => <div
-          style={{
-            display: 'flex',          
-            flexDirection: 'column',
-            boxSizing: 'border-box',
-            justifyContent: 'space-between',
-            fontWeight: 600,
-            color: '#333',
-            textDecoration: 'none',
-            flexBasis: '25%',
-          }}
-        >
-          <h3>{ title }</h3>
-          { createdBy[idx] && 
-            <div>
-              <div><img src={`https://clarifai.atlassian.net${createdBy[idx].profilePicture.path}`} /> { createdBy[idx].publicName }</div>
-            </div>
-          }
+      {items.map(({ title, description, googleId, idx }) => (
+        <div className={cx('card', { 'has-preview': googleId && thumbnails?.[googleId]?.thumbnailLink })}>
+          <div className="title-wrapper flex justify-between">
+            <h3 className='title'>{title}</h3>
+            <IconInfo className='info-icon' color="darkgrey" />
+          </div>
+
+          <div className='creator-info'>
+            {createdBy[idx] && (
+              <div className='flex items-end'>
+                <img
+                  src={`https://clarifai.atlassian.net${createdBy[idx].profilePicture.path}`}
+                  alt={createdBy[idx].publicName}
+                  className='avatar h-10 w-10'
+                />
+                <div className="flex flex-col">
+                  <span className='name black'>{createdBy[idx].publicName}</span>
+                  <span className='date black'>{createdDate[idx]}</span>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* <div>{description && parse(description)}</div> */}
-          {googleId && thumbnails[googleId] && <img src={thumbnails[googleId].thumbnailLink} />}
-        </div>)
-      }
+          {(googleId && thumbnails[googleId] && thumbnails[googleId].thumbnailLink) ? (
+            <img
+              src={thumbnails[googleId].thumbnailLink}
+              alt={title}
+              className='preview rounded-lg'
+            />
+          ) : <div className='rounded-lg default-placeholder' />}
+        </div>
+      ))}
     </>
   );
 
