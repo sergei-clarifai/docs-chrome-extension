@@ -33,6 +33,13 @@
 //     );
 // }
 
+export function getFileById(fileId) {
+  return gapi.client.drive.files
+    .get({
+      fileId,
+    });
+}
+
 export function listFiles(folderId) {
   return gapi.client.drive.files
     .list({

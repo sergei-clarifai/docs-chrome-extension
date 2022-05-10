@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { atlassianSearchContent, atlassianSearch } from '../utils/atlassian';
+import { getFileById } from '../utils/drive';
 import parse from 'html-react-parser';
+
+import { useGoogle } from './GoogleDriveFiles';
 
 export const AtlassianData = () => {
   const [items, setItems] = useState([]);
+  const driveReady = useGoogle();
 
   useEffect(() => {
+    if (!driveReady ) return;
     atlassianSearchContent('777191487?expand=body.storage').then((contentData) => {
       console.log('atlassianSearchContent contentData:', contentData);
       const content = contentData.body.storage.value;
@@ -14,10 +19,25 @@ export const AtlassianData = () => {
       
       const newItems = Array.from(div.querySelectorAll('tr')).filter((tr) => tr.querySelectorAll('td').length).map((tr, idx) => {
         const tds = Array.from(tr.querySelectorAll('td'));
-        console.log('atlassianSearchContent newItems:', idx, tds[1].children)
+        
 
         const linkToPage = tds[0].querySelector('a');
         const linkToDrive = tds[2].querySelector('a');
+
+        const found = linkToDrive ? linkToDrive.innerHTML.match(/drive\.google\.com\/file\/d\/([^//]+)\/view/) : null;
+        if (found && found.length) {
+          const googleId = found[1];
+          console.log('atlassianSearchContent linkToDrive:', idx, googleId);
+
+          
+          getFileById(googleId).then((fileResponse) => {
+            console.log('atlassianSearchContent getFile:', idx, fileResponse);
+          }).catch((err) => {
+            console.log('atlassianSearchContent ERROR:', idx, err);
+          });
+
+        }
+        
         const newItem = {
           linkToPage,
           linkToDrive,
@@ -49,7 +69,7 @@ export const AtlassianData = () => {
     //         console.log('atlassianSearchContent links:', links);
     //       });
     //   });
-  }, []);
+  }, [driveReady]);
   
   return (
     <>
