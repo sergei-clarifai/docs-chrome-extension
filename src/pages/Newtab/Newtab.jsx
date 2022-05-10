@@ -42,13 +42,6 @@ const Newtab = () => {
         >
           <GoogleDriveFiles folderIds={['1H1ZbBNa8uDkeHUbXNfHFa-i3SQkdOv4J']} />
         </SliderContainer>
-        <SliderContainer
-          category="engineering"
-          title={'Engineering Goodies Season #3'}
-          description="All episodes of Clarifai's Engineering Goodies in start of 2022"
-        >
-          <GoogleDriveFiles folderIds={['1z9GeAGZjdSSxaBXzg3XPzBnjmcnPZjW1']} />
-        </SliderContainer>
         <GithubFiles />
       </div>
 
