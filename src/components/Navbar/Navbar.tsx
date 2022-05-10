@@ -4,7 +4,13 @@ import '../../assets/styles/tailwind.css';
 
 export const Navbar = () => {
   return (
-    <header className="relative bg-white z-20 flex-none mb-5 py-5 flex items-center antialiased border-b border-gray-200">
+    <header
+      className="relative bg-white z-20 flex-none mb-5 py-4 flex items-center antialiased border-b border-gray-200"
+      style={{
+        position: 'sticky',
+        top: 0,
+      }}
+    >
       <div className="max-w-screen-2xl mx-auto px-10 flex-auto flex items-center justify-between min-w-0 space-x-6">
         <img className="relative mr-2 w-40" src={Logo} alt="clarifai-logo" id="logo" height="21px" />
 
