@@ -94,7 +94,7 @@ export const AtlassianData = () => {
         >
           <h3>{ title }</h3>
           {/* <div>{description && parse(description)}</div> */}
-          <div>googleId: {googleId ? googleId : 'NULL'}</div>
+          {googleId && thumbnails[googleId] && <img src={thumbnails[googleId].thumbnailLink} />}
         </div>)
       }
     </>
