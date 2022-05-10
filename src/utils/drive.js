@@ -37,6 +37,7 @@ export function getFileById(fileId) {
   return gapi.client.drive.files
     .get({
       fileId,
+      fields: 'id, name, thumbnailLink, hasThumbnail, iconLink, owners, videoMediaMetadata, webContentLink, webViewLink',
     });
 }
 

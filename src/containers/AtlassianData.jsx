@@ -7,6 +7,7 @@ import { useGoogle } from './GoogleDriveFiles';
 
 export const AtlassianData = () => {
   const [items, setItems] = useState([]);
+  const [thumbnails, setThumbnails] = useState({});
   const driveReady = useGoogle();
 
   useEffect(() => {
@@ -23,14 +24,18 @@ export const AtlassianData = () => {
 
         const linkToPage = tds[0].querySelector('a');
         const linkToDrive = tds[2].querySelector('a');
-
+        let googleId;
         const found = linkToDrive ? linkToDrive.innerHTML.match(/drive\.google\.com\/file\/d\/([^//]+)\/view/) : null;
         if (found && found.length) {
-          const googleId = found[1];
+          googleId = found[1];
           console.log('atlassianSearchContent linkToDrive:', idx, googleId);
 
           
           getFileById(googleId).then((fileResponse) => {
+            setThumbnails((oldThumbnails) => ({
+              ...oldThumbnails,
+              [googleId]: fileResponse.result,
+            }));
             console.log('atlassianSearchContent getFile:', idx, fileResponse);
           }).catch((err) => {
             console.log('atlassianSearchContent ERROR:', idx, err);
@@ -41,6 +46,7 @@ export const AtlassianData = () => {
         const newItem = {
           linkToPage,
           linkToDrive,
+          googleId,
           title: tds[0].innerText,
           description: tds[1].innerHTML,
           driveLink: tds[2],
@@ -74,7 +80,7 @@ export const AtlassianData = () => {
   return (
     <>
       {
-        items.map(({ title, description }) => <div
+        items.map(({ title, description, googleId }) => <div
           style={{
             display: 'flex',          
             flexDirection: 'column',
@@ -87,7 +93,8 @@ export const AtlassianData = () => {
           }}
         >
           <h3>{ title }</h3>
-          <div>{description && parse(description)}</div>
+          {/* <div>{description && parse(description)}</div> */}
+          <div>googleId: {googleId ? googleId : 'NULL'}</div>
         </div>)
       }
     </>
