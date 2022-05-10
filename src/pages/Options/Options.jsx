@@ -52,7 +52,7 @@ const Options = ({ title }) => {
 
           <div className="w-full pl-6" id="tab-contents">
             <section id="github-view"  style={{ display: currentTab === 'github' ? 'block' : 'none' }}>
-              <div className="p-4 w-full bg-white rounded-lg sm:p-6 lg:p-8">
+              <div className="p-4 w-full bg-white rounded-lg">
                 <form className="space-y-6" action="#" onSubmit={(event) => {
                   event.preventDefault();
                   const githubConfig = loadFromLocal('github');
@@ -94,7 +94,7 @@ const Options = ({ title }) => {
               </div>
             </section>
             <section id="confluence-view" style={{ display: currentTab === 'confluence' ? 'block' : 'none' }}>
-              <div className="p-4 w-full bg-white rounded-lg sm:p-6 lg:p-8">
+              <div className="p-4 w-full bg-white rounded-lg">
                 <form className="space-y-6" action="#">
                     <h5 className="text-xl font-medium text-gray-900">Provide the Information</h5>
                     <div>
@@ -107,7 +107,7 @@ const Options = ({ title }) => {
               </div>
             </section>
             <section id="google_drive-view"  style={{ display: currentTab === 'google_drive' ? 'block' : 'none' }}>
-              <div className="p-4 w-full bg-white rounded-lg sm:p-6 lg:p-8">
+              <div className="p-4 w-full bg-white rounded-lg">
                 <form className="space-y-6" action="#">
                     <h5 className="text-xl font-medium text-gray-900">Provide Credentials for Google Drive</h5>
                 </form>
