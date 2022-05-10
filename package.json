@@ -15,6 +15,7 @@
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.2",
     "autoprefixer": "^10.4.7",
+    "classnames": "^2.3.1",
     "html-react-parser": "^1.4.12",
     "mdast-util-gfm-table": "^1.0.4",
     "postcss": "^8.2.8",
