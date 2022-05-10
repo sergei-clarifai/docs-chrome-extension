@@ -8,6 +8,7 @@ import { useGoogle } from './GoogleDriveFiles';
 export const AtlassianData = () => {
   const [items, setItems] = useState([]);
   const [thumbnails, setThumbnails] = useState({});
+  const [createdBy, setCreatedBy] = useState({});
   const driveReady = useGoogle();
 
   useEffect(() => {
@@ -21,6 +22,25 @@ export const AtlassianData = () => {
       const newItems = Array.from(div.querySelectorAll('tr')).filter((tr) => tr.querySelectorAll('td').length).map((tr, idx) => {
         const tds = Array.from(tr.querySelectorAll('td'));
         
+        console.log('atlassianSearchContent tds:', idx, tds.map((td) => td.innerHTML));
+        const foundTitle = tds[0].innerHTML.match(/ri:content-title="(.*?)"/);
+        console.log('atlassianSearchContent foundTitle:', idx, foundTitle);
+
+        if (foundTitle && foundTitle.length) {
+          const contentTitle = foundTitle[1];
+          atlassianSearch(`cql=title="${contentTitle.replaceAll(' ', '+')}"&expand=space,title,content,history,body.view,metadata.labels`).then((r) => {
+            console.log('atlassianSearchContent DATA:', idx, r.results);
+            if (r.results.length && r.results[0]) {
+              console.log('atlassianSearchContent DATA:', idx, r.results[0].history.createdBy);
+              setCreatedBy((oldState) => ({
+                ...oldState,
+                [idx]: r.results[0].history.createdBy,
+              }));
+            }
+          }).catch((e) => {
+            console.log('atlassianSearchContent atlassianSearch ERROR:', idx, e);
+          })
+        }
 
         const linkToPage = tds[0].querySelector('a');
         const linkToDrive = tds[2].querySelector('a');
@@ -28,15 +48,12 @@ export const AtlassianData = () => {
         const found = linkToDrive ? linkToDrive.innerHTML.match(/drive\.google\.com\/file\/d\/([^//]+)\/view/) : null;
         if (found && found.length) {
           googleId = found[1];
-          console.log('atlassianSearchContent linkToDrive:', idx, googleId);
 
-          
           getFileById(googleId).then((fileResponse) => {
             setThumbnails((oldThumbnails) => ({
               ...oldThumbnails,
               [googleId]: fileResponse.result,
             }));
-            console.log('atlassianSearchContent getFile:', idx, fileResponse);
           }).catch((err) => {
             console.log('atlassianSearchContent ERROR:', idx, err);
           });
@@ -44,6 +61,7 @@ export const AtlassianData = () => {
         }
         
         const newItem = {
+          idx,
           linkToPage,
           linkToDrive,
           googleId,
@@ -80,7 +98,7 @@ export const AtlassianData = () => {
   return (
     <>
       {
-        items.map(({ title, description, googleId }) => <div
+        items.map(({ title, description, googleId, idx }) => <div
           style={{
             display: 'flex',          
             flexDirection: 'column',
@@ -93,6 +111,11 @@ export const AtlassianData = () => {
           }}
         >
           <h3>{ title }</h3>
+          { createdBy[idx] && 
+            <div>
+              <div><img src={`https://clarifai.atlassian.net${createdBy[idx].profilePicture.path}`} /> { createdBy[idx].publicName }</div>
+            </div>
+          }
           {/* <div>{description && parse(description)}</div> */}
           {googleId && thumbnails[googleId] && <img src={thumbnails[googleId].thumbnailLink} />}
         </div>)
