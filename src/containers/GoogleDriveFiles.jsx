@@ -119,11 +119,11 @@ export const GoogleDriveFiles = ({
         }}
         href={file.webViewLink}
       >
-        {file.name}
+        <h3 className='title'>{file.name}</h3>
         <img
           src={file.thumbnailLink}
           alt={file.name}
-          style={{ borderRadius: 10, marginTop: 10 }}
+          className='rounded-lg'
         />
       </a>)))).flat()}
     </>

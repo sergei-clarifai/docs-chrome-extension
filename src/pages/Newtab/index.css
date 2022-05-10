@@ -11,3 +11,61 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.card {
+  display: flex;  
+  flex-direction: column;
+  box-sizing: border-box;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  width: 300px;
+  min-width: 300px;
+  margin-right: 10px;
+  position: relative;
+}
+
+.card .title-wrapper {
+  height: 70px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  font-size: 0.9rem;
+  color: #333;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.card .title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 280px;
+  overflow: hidden;
+}
+
+.card.has-preview .title-wrapper .title {
+  color: white;
+}
+
+.card.has-preview .title-wrapper {
+  background: linear-gradient(180deg, black, transparent);
+}
+
+.card .info-icon:hover {
+  cursor: pointer;
+  fill: slategrey;
+  transition: 0.2s ease;
+}
+
+.card img {
+  height: 170px;
+  background: linear-gradient(0deg, #00000088 30%, #ffffff44 100%);
+}
+
+.card .default-placeholder {
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+}

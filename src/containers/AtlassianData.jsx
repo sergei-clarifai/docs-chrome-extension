@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import cx from 'classnames';
+import parse from 'html-react-parser';
+import { IconInfo } from '../components/Icons/IconInfo';
 import { atlassianSearchContent, atlassianSearch } from '../utils/atlassian';
 import { getFileById } from '../utils/drive';
-import parse from 'html-react-parser';
-
 import { useGoogle } from './GoogleDriveFiles';
 
 export const AtlassianData = () => {
@@ -79,24 +80,22 @@ export const AtlassianData = () => {
   
   return (
     <>
-      {
-        items.map(({ title, description, googleId }) => <div
-          style={{
-            display: 'flex',          
-            flexDirection: 'column',
-            boxSizing: 'border-box',
-            justifyContent: 'space-between',
-            fontWeight: 600,
-            color: '#333',
-            textDecoration: 'none',
-            flexBasis: '25%',
-          }}
-        >
-          <h3>{ title }</h3>
+      {items.map(({ title, description, googleId }) => (
+        <div className={cx('card', { 'has-preview': googleId && thumbnails?.[googleId]?.thumbnailLink })}>
+          <div className="title-wrapper flex justify-between">
+            <h3 className='title'>{title}</h3>
+            <IconInfo className='info-icon' color="darkgrey" />
+          </div>
           {/* <div>{description && parse(description)}</div> */}
-          {googleId && thumbnails[googleId] && <img src={thumbnails[googleId].thumbnailLink} />}
-        </div>)
-      }
+          {(googleId && thumbnails[googleId] && thumbnails[googleId].thumbnailLink) ? (
+            <img
+              src={thumbnails[googleId].thumbnailLink}
+              alt={title}
+              className='rounded-lg'
+            />
+          ) : <div className='rounded-lg default-placeholder' />}
+        </div>
+      ))}
     </>
   );
 
