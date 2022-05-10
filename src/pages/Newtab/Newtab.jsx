@@ -3,6 +3,7 @@ import './Newtab.css';
 import './Newtab.scss';
 import { GithubFiles } from '../../containers/GithubFiles';
 import { GoogleDriveFiles } from '../../containers/GoogleDriveFiles';
+import { AtlassianData } from '../../containers/AtlassianData';
 
 const SliderContainer = ({children, title}) => {
 
@@ -43,6 +44,9 @@ const Newtab = () => {
         padding: 10,
       }}
     >
+      <SliderContainer title={'Engeneering Goodies Season #1'}>      
+        <AtlassianData />
+      </SliderContainer>
       <SliderContainer title={'Engeneering Goodies Season #1'}>
         <GoogleDriveFiles folderIds={['1bviyV6Gh3cFppFNu4hC5MQoCi2pas502']} />
       </SliderContainer>
