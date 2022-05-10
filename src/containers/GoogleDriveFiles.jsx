@@ -104,37 +104,24 @@ export const GoogleDriveFiles = ({
     }
   }, [driveReady]);
 
-  console.log('XXX driveReady:', driveReady);
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-      }}
-    >
-      {(folderIds || []).map((folderId) => (
-        <div
-          style={{
-            display: 'flex',
-            gap: 10,
-          }}
-        >
-      {driveFiles[folderId].map((file) => 
-        <div style={{
-          flex: 1,
-        }}>
-          <a href={file.webViewLink}>
-            {file.name}
-          </a>
-          <br />
-          <img src={file.thumbnailLink} />
-        </div>
-      )}
-        </div>))}
-      
-    
-    </div>
+    <>
+      {(folderIds || []).map((folderId) => (driveFiles[folderId].map((file) => (<a
+        style={{
+          display: 'flex',          
+          flexDirection: 'column',
+          boxSizing: 'border-box',
+          justifyContent: 'space-between',
+          fontWeight: 600,
+          color: '#333',
+          textDecoration: 'none',
+          flexBasis: '25%',
+        }}
+        href={file.webViewLink}
+      >
+        {file.name}        
+        <img src={file.thumbnailLink} style={{ borderRadius: 10, marginTop: 10 }} />
+      </a>)))).flat()}
+    </>
   );
 };
