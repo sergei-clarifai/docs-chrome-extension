@@ -20,7 +20,7 @@ const SliderContainer = ({children, category, title, description}) => (
 
 const Newtab = () => {
   return (
-    <div className='box-border'>
+    <div className='box-border pb-20'>
       <Navbar />
       <div className='max-w-screen-2xl mx-auto relative z-10'>
         <SliderContainer
@@ -48,10 +48,11 @@ const Newtab = () => {
       </div>
 
       <div
-        className="absolute inset-0 bottom-10 bg-bottom bg-no-repeat bg-slate-50 dark:bg-[#0B1120] index_beams__3fKa4"
+        className="inset-0 bg-bottom bg-no-repeat bg-slate-50 dark:bg-[#0B1120] index_beams__3fKa4"
         style={{
           backgroundImage: 'url(https://tailwindcss.com/_next/static/media/hero@75.4dea7abe609fc522c039fba7662ceea2.jpg)',
           backgroundSize: '150rem',
+          position: 'fixed',
         }}
       >
         <div
