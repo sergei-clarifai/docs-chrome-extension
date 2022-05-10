@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { listFiles } from '../utils/drive';
 
@@ -97,16 +97,14 @@ export const GoogleDriveFiles = ({
           ...oldDriveFiles,
           [folderId]: files,
         }));
-      }).catch((e) => {
-        console.log('DRIVE ERROR:', e);
-      })
-      )      
+      }).catch((e) => console.log('DRIVE ERROR:', e)))
     }
-  }, [driveReady]);
+  }, [driveReady, folderIds]);
 
   return (
     <>
-      {(folderIds || []).map((folderId) => (driveFiles[folderId].map((file) => (<a
+      {(folderIds || []).map((folderId) => (driveFiles[folderId].map((file) => (
+      <a
         style={{
           display: 'flex',          
           flexDirection: 'column',
@@ -115,12 +113,18 @@ export const GoogleDriveFiles = ({
           fontWeight: 600,
           color: '#333',
           textDecoration: 'none',
-          flexBasis: '25%',
+          width: 300,
+          minWidth: 300,
+          marginRight: 10,
         }}
         href={file.webViewLink}
       >
-        {file.name}        
-        <img src={file.thumbnailLink} style={{ borderRadius: 10, marginTop: 10 }} />
+        {file.name}
+        <img
+          src={file.thumbnailLink}
+          alt={file.name}
+          style={{ borderRadius: 10, marginTop: 10 }}
+        />
       </a>)))).flat()}
     </>
   );
