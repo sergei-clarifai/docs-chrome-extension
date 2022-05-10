@@ -42,7 +42,13 @@ const Newtab = () => {
         >
           <GoogleDriveFiles folderIds={['1H1ZbBNa8uDkeHUbXNfHFa-i3SQkdOv4J']} />
         </SliderContainer>
-        <GithubFiles />
+        <SliderContainer
+          category="github"
+          title={'New portal documentaion'}
+          description="All topics regrding how to develop new portal"
+        >
+          <GithubFiles />
+        </SliderContainer>
       </div>
 
       <div

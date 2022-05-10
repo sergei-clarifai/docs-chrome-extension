@@ -15,25 +15,17 @@ export const GithubFiles = () => {
     }, []);
 
   return (
-    <div style={{
-      display: 'flex',
-      height: 300,
-      gap: 10,
-      width: '100%',
-      boxSizing: 'border-box',
-      padding: 10,
-      overflow: 'auto',
-      fontSize: '0.5em',
-    }}>
-    
+    <>    
     { markdownFiles.map(({ name, content, html_url }) => {
       return <div key={name} style={{
         border: '#f00 0px solid',
         borderRadius: 5,
         boxSizing: 'border-box',
         padding: 10, 
+        fontSize: '0.6em',
         flex: 1,
-        minWidth: '20%',
+        minWidth: 300,
+        maxHeight: 400,
         overflow: 'hidden',
         position: 'relative',
       }}>
@@ -55,6 +47,6 @@ export const GithubFiles = () => {
       </div>;
     })
     }
-    </div>
+    </>
   );
 };

@@ -17,6 +17,27 @@ const RehypeComponentsList = {
         {props.children}
       </table>;
   },
+  h1: (props) => {
+    return <h1 style={{
+      marginTop: 20,
+      fontSize: '3em',
+      fontWeight: 800,
+      color: '#333',
+    }}>{props.children}</h1>;
+  },
+  p: (props) => {
+    return <p style={{
+      marginBottom: 10,
+    }}>{props.children}</p>;
+  },
+  h2: (props) => {
+    return <h2 style={{
+      marginTop: 10,
+      fontSize: '2em',
+      fontWeight: 800,
+      color: '#555',
+    }}>{props.children}</h2>;
+  },
   a: (props) => {
     return <a href={props.href}>
       {props.children}

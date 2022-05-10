@@ -135,7 +135,7 @@ export async function getDocsFromGithub() {
     /\.md$/.test(name)
   );
 
-  const selectedDocFiles = Array(4)
+  const selectedDocFiles = Array(6)
     .fill(0)
     .map(() => {
       const idx = Math.round(Math.random() * docsFileNames.length);
@@ -146,9 +146,10 @@ export async function getDocsFromGithub() {
 
   for (let i = 0; i < selectedDocFiles.length; i++) {
     const item = selectedDocFiles[i];
-    const contentReponse = await fetchGitHub(item.git_url);
-
-    item.content = b64DecodeUnicode(contentReponse.content);
+    if (item && item.git_url) {
+      const contentReponse = await fetchGitHub(item.git_url);
+      item.content = b64DecodeUnicode(contentReponse.content);
+    }    
   }
 
   return selectedDocFiles;
