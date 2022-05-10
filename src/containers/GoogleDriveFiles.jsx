@@ -7,7 +7,7 @@ const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
 ];
 
-const useGoogle = () => {
+export const useGoogle = () => {
   const [driveReady, setDriveReady] = useState(false);
   useEffect(() => {
       const SCOPE = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';

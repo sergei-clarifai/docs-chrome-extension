@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { GithubFiles } from '../../containers/GithubFiles';
 import { GoogleDriveFiles } from '../../containers/GoogleDriveFiles';
+
+import { AtlassianData } from '../../containers/AtlassianData';
+
 import './Newtab.css';
 import './Newtab.scss';
+
 
 const SliderContainer = ({children, category, title, description}) => (
   <div className='flex flex-col w-full mb-12'>
@@ -20,22 +24,16 @@ const SliderContainer = ({children, category, title, description}) => (
 
 const Newtab = () => {
   return (
+
     <div className='box-border pb-20'>
       <Navbar />
       <div className='max-w-screen-2xl mx-auto px-10 relative z-10'>
         <SliderContainer
-          category="engineering"
-          title={'Engineering Goodies Season #1'}
-          description="All episodes of Clarifai's Engineering Goodies in 2021"
+          title={'Front End Forum'}
+          category="frontendforum"
+          description="All topics of Front-end Forum"
         >
-          <GoogleDriveFiles folderIds={['1bviyV6Gh3cFppFNu4hC5MQoCi2pas502']} />
-        </SliderContainer>
-        <SliderContainer
-          category="engineering"
-          title={'Engineering Goodies Season #2'}
-          description="All episodes of Clarifai's Engineering Goodies in start of 2022"
-        >
-          <GoogleDriveFiles folderIds={['1ugZjUFj2JM2Y4rOBHH9byVaOceaH3CyJ']} />
+          <AtlassianData />
         </SliderContainer>
         <SliderContainer
           category="engineering"
@@ -62,6 +60,7 @@ const Newtab = () => {
           }}
         ></div>
       </div>
+
     </div>
   );
 };
