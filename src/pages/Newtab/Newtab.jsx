@@ -22,7 +22,7 @@ const Newtab = () => {
   return (
     <div className='box-border pb-20'>
       <Navbar />
-      <div className='max-w-screen-2xl mx-auto relative z-10'>
+      <div className='max-w-screen-2xl mx-auto px-10 relative z-10'>
         <SliderContainer
           category="engineering"
           title={'Engineering Goodies Season #1'}
