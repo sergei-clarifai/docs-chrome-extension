@@ -9,7 +9,7 @@ import remarkGfm from "remark-gfm";
 
 import { useMyContextState } from '../context';
 
-const RehypeComponentsList = {
+const RehypeComponentsList = (staticFiles) => ({
   table: (props) => {
     return <table
         style={{ border: '#aaa 0px solid', borderRadius: 5 }}
@@ -17,6 +17,64 @@ const RehypeComponentsList = {
         {props.children}
       </table>;
   },
+  tip: (props) => {
+    return <div
+      style={{
+        backgroundColor: '#777',
+        padding: 10,
+        borderRadius: '5px',
+        color: '#fff',
+      }}
+    >
+      {props.children}
+    </div>;
+  },
+  danger: (props) => {
+    return <div
+      style={{
+        backgroundColor: '#f00',
+        padding: 10,
+        borderRadius: '5px',
+        color: '#fff',
+      }}
+    >
+      {props.children}
+    </div>;
+  },
+  pre: (props) => {
+    return <pre style={{
+      border: '#f00 0px solid',
+      padding: 5, //'5px !important',
+      overflow: 'hidden',
+      backgroundColor: '#555555',
+      borderRadius: '5px',
+      color: 'white',
+      marginTop: '10px',
+      marginBottom: '10px',
+      marginLeft: '-5px',
+      marginRight: '-5px',
+    }}>{props.children}</pre>;
+  },
+  hr: (props) => {
+    return <hr style={{
+      marginTop: 5,
+      marginBottom: 10,
+    }}>{props.children}</hr>;
+  },
+  img: (props) => {
+    // console.log('XXX MARKDOWN props.src:', props.src);
+    // console.log('XXX MARKDOWN staticFiles:', staticFiles);
+    return <img 
+      src={staticFiles[`docs/static${props.src}`].download_url}
+      style={{
+        marginTop: 10,
+        marginBottom: 10,
+        borderRadius: 5,
+        marginLeft: '-5px',
+        maxWidth: 'calc(100% + 10px)',
+      }}
+    />;
+  }, 
   h1: (props) => {
     return <h1 style={{
       marginTop: 20,
@@ -43,9 +101,9 @@ const RehypeComponentsList = {
       {props.children}
     </a>;
   }
-};
+});
 
-function compile(val) {
+function compile(val, staticFiles) {
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -56,7 +114,7 @@ function compile(val) {
     .use(rehypeRaw)
     .use(rehypeReact, {
       createElement: React.createElement,
-      components: RehypeComponentsList
+      components: RehypeComponentsList(staticFiles)
     });
 
   const ast = processor.runSync(processor.parse(val));
@@ -67,14 +125,15 @@ function compile(val) {
   };
 }
 
-export default function MarkDown({markdown}) {
+export default function MarkDown({ markdown, staticFiles }) {
   // const state = useMyContextState();
-  const { contents, ast } = compile(markdown);
+  const { contents, ast } = compile(markdown, staticFiles);
   return (
     <div
       style={{
         border: "#f00 0px solid",
-        overflow: 'auto',
+        overflow: 'scroll',
+        height: '100%',
         padding: 10
       }}
     >

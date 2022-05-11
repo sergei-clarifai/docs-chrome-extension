@@ -2,6 +2,11 @@
 //   console.log('got the token', token);
 // });
 
+import { data } from "autoprefixer";
+import { loadFromLocal } from './localStorage';
+
+const DISABLE_CACHE = true;
+
 // const API_KEY = 'AIzaSyAZkK2rXKZ-BbfJ3MyE3eM_mB-cORFwqHU';
 // const DISCOVERY_DOCS = [
 //   'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
@@ -34,14 +39,40 @@
 // }
 
 export function getFileById(fileId) {
+  const localKey = `googleDriveCache_files_get_${fileId}`;
+  const localData = loadFromLocal(localKey);
+
+  if (!DISABLE_CACHE && localData) {
+    const { saveTime, response } = localData;
+    if (response && response.result) {
+      // return Promise.resolve(response);
+
+    }    
+  }
+
   return gapi.client.drive.files
     .get({
       fileId,
       fields: 'id, name, thumbnailLink, hasThumbnail, iconLink, owners, videoMediaMetadata, webContentLink, webViewLink',
+    }).then((response) => {
+      const saveData = JSON.stringify({ saveTime: new Date(), response });
+      localStorage.setItem(localKey, saveData);
+      return response;
     });
 }
 
 export function listFiles(folderId) {
+  const localKey = `googleDriveCache_files_list_${folderId}`;
+
+  const localData = loadFromLocal(localKey);
+
+  if (!DISABLE_CACHE && localData) {
+    const { saveTime, response } = localData;
+    if (response && response.result) {
+      // return Promise.resolve(response.result.files);
+    }    
+  }
+
   return gapi.client.drive.files
     .list({
       fields:
@@ -53,9 +84,8 @@ export function listFiles(folderId) {
       supportsTeamDrives: true,
     })
     .then(function (response) {
-        //   response.result.files.map((file) => {
-        //     console.log(file);
-        //   });
+        // const saveData = JSON.stringify({ saveTime: new Date(), response });
+        // localStorage.setItem(localKey, saveData);
         return response.result.files;
     })
 }

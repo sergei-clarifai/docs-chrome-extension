@@ -15,25 +15,21 @@ export const AtlassianData = () => {
 
   useEffect(() => {
     if (!driveReady ) return;
+    console.log('XXX DRIVE HERE');
     atlassianSearchContent('777191487?expand=body.storage').then((contentData) => {
-      console.log('atlassianSearchContent contentData:', contentData);
       const content = contentData.body.storage.value;
       const div = document.createElement('div');
       div.innerHTML = content;
       
       const newItems = Array.from(div.querySelectorAll('tr')).filter((tr) => tr.querySelectorAll('td').length).map((tr, idx) => {
         const tds = Array.from(tr.querySelectorAll('td'));
-        
-        console.log('atlassianSearchContent tds:', idx, tds.map((td) => td.innerHTML));
+
         const foundTitle = tds[0].innerHTML.match(/ri:content-title="(.*?)"/);
-        console.log('atlassianSearchContent foundTitle:', idx, foundTitle);
 
         if (foundTitle && foundTitle.length) {
           const contentTitle = foundTitle[1];
-          atlassianSearch(`cql=title="${contentTitle.replaceAll(' ', '+')}"&expand=space,title,content,history,body.view,metadata.labels`).then((r) => {
-            console.log('atlassianSearchContent DATA:', idx, r.results);
+          atlassianSearch(`cql=title="${contentTitle.replaceAll(' ', '+')}"&expand=page,space,title,content,history,body.view,metadata.labels`).then((r) => {
             if (r.results.length && r.results[0]) {
-              console.log('atlassianSearchContent DATA:', idx, r.results[0].history.createdBy);
               setCreatedBy((oldState) => ({
                 ...oldState,
                 [idx]: r.results[0].history.createdBy,
@@ -50,12 +46,16 @@ export const AtlassianData = () => {
 
         const linkToPage = tds[0].querySelector('a');
         const linkToDrive = tds[2].querySelector('a');
+        console.log('XXX DRIVE linkToDrive:', linkToDrive);
+        console.log('XXX DRIVE linkToPage:', linkToPage);
+        console.log('XXX DRIVE tds[0]:', tds[0]);
         let googleId;
         const found = linkToDrive ? linkToDrive.innerHTML.match(/drive\.google\.com\/file\/d\/([^//]+)\/view/) : null;
         if (found && found.length) {
           googleId = found[1];
 
           getFileById(googleId).then((fileResponse) => {
+            console.log('XXX PROMISE:', fileResponse);
             setThumbnails((oldThumbnails) => ({
               ...oldThumbnails,
               [googleId]: fileResponse.result,
@@ -110,8 +110,20 @@ export const AtlassianData = () => {
   
   return (
     <>
-      {items.map(({ title, description, googleId, idx }) => (
-        <div className={cx('card', { 'has-preview': googleId && thumbnails?.[googleId]?.thumbnailLink })}>
+      {items.map(({ title, description, googleId, idx, linkToDrive, linkToPage }) => (
+        <div
+          style={{ 
+            minHeight: 169,
+            cursor: linkToDrive || linkToPage ? 'pointer' : '',
+          }}
+          className={cx('card', { 'has-preview': googleId && thumbnails?.[googleId]?.thumbnailLink })}
+          onClick={() => {
+            if (linkToDrive || linkToPage) {
+              document.location.href = linkToDrive || linkToPage;
+            }
+            console.log(createdBy[idx]);
+          }}
+        >
           <div className="title-wrapper flex justify-between">
             <h3 className='title'>{title}</h3>
             <IconInfo className='info-icon' color="darkgrey" />
