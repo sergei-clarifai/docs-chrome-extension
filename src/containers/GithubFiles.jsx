@@ -37,6 +37,7 @@ export const GithubFiles = () => {
           flex: 1,
           minWidth: 550,
           maxHeight: 700,
+          marginRight: 15,
           position: 'relative',
           backgroundColor: '#fff5f2',
           cursor: 'pointer',

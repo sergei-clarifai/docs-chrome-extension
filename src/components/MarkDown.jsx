@@ -132,7 +132,7 @@ export default function MarkDown({ markdown, staticFiles }) {
     <div
       style={{
         border: "#f00 0px solid",
-        overflow: 'scroll',
+        overflow: 'auto',
         height: '100%',
         padding: 10
       }}
