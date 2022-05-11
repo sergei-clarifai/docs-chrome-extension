@@ -41,6 +41,7 @@ export const GithubFiles = () => {
           position: 'relative',
           backgroundColor: '#fff5f2',
           cursor: 'pointer',
+          overflow: 'hidden',
         }}
         onClick={(e) => {
 
@@ -69,20 +70,18 @@ export const GithubFiles = () => {
         }}
       >
         <MarkDown markdown={content} staticFiles={staticFiles} />
-        {/* <div
+        <div
           style={{
             position: 'absolute',
-            backgroundColor: '#777',
-            opacity: 0.03,
+            background: 'linear-gradient(0deg, rgb(254 244 241), transparent)',
             cursor: 'pointer',
             display: 'block',
             left: 0,
-            top: 0,
+            bottom: 0,
             width: '100%',
-            height: '100%',
+            height: 100,
           }}
-          onClick={() => document.location.href = html_url}
-        /> */}
+        />
       </div>;
     })
     }
