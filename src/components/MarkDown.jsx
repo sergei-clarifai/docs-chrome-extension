@@ -9,14 +9,17 @@ import remarkGfm from "remark-gfm";
 
 import { useMyContextState } from '../context';
 
+const borderStyle = { border: '1px solid #aaa' };
+const tableComponentsMap = {
+  table: ({ children }) => <table style={borderStyle}>{children}</table>,
+  thead: ({ children }) => <thead style={borderStyle}>{children}</thead>,
+  th: ({ children }) => <th style={borderStyle}>{children}</th>,
+  tr: ({ children }) => <tr style={borderStyle}>{children}</tr>,
+  td: ({ children }) => <td style={borderStyle}>{children}</td>,
+};
+
 const RehypeComponentsList = (staticFiles) => ({
-  table: (props) => {
-    return <table
-        style={{ border: '#aaa 0px solid', borderRadius: 5 }}
-      >
-        {props.children}
-      </table>;
-  },
+  ...tableComponentsMap,
   tip: (props) => {
     return <div
       style={{
