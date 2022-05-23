@@ -6,7 +6,7 @@ import '../../assets/styles/tailwind.css';
 export const Navbar = () => {
   return (
     <header
-      className="relative bg-white z-20 flex-none mb-5 py-4 flex items-center antialiased border-b border-gray-200"
+      className="relative bg-white dark:bg-slate-900 z-20 flex-none mb-5 py-4 flex items-center antialiased border-b border-gray-200 dark:border-slate-700"
       style={{
         position: 'sticky',
         top: 0,
@@ -19,7 +19,7 @@ export const Navbar = () => {
         <a href="/options.html">
           <button
             type="button"
-            className="flex py-2.5 px-3 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+            className="flex py-2.5 px-3 mr-2 mb-2 text-sm font-medium text-gray-900 dark:text-white focus:outline-none bg-white dark:bg-slate-700 rounded-lg border border-gray-200 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-slate-600 hover:text-blue-700 dark:hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-200"
           >
             <IconSettings className='mr-1' color='darkgrey' />
             Configure Settings
