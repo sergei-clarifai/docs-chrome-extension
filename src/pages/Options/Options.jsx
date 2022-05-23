@@ -52,7 +52,7 @@ const Options = ({ title }) => {
 
           <div className="w-full pl-6" id="tab-contents">
             <section id="github-view"  style={{ display: currentTab === 'github' ? 'block' : 'none' }}>
-              <div className="p-4 px-10 pb-9 w-full bg-white dark:bg-[#0B1120] rounded-lg">
+              <div className="p-4 px-10 pb-9 w-full bg-white dark:bg-[#0E172E] rounded-lg">
                 <form className="space-y-6" action="#" onSubmit={(event) => {
                   event.preventDefault();
                   const githubConfig = loadFromLocal('github');
@@ -78,7 +78,7 @@ const Options = ({ title }) => {
                         type="text"
                         id="githubUsernameInput"
                         name="username"
-                        className="bg-gray-50 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 border border-gray-300 dark:border-slate-700 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
+                        className="bg-gray-50 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 dark:text-white border border-gray-300 dark:border-slate-700 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
                         required
                         defaultValue={formState.username}
                       />
@@ -95,7 +95,7 @@ const Options = ({ title }) => {
                         defaultValue={formState.token}
                         id="githubTokenInput"
                         name="token"
-                        className="bg-gray-50 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 border border-gray-300 dark:border-slate-700 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4" 
+                        className="bg-gray-50 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 dark:text-white border border-gray-300 dark:border-slate-700 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4" 
                         required
                       />
                     </div>
@@ -110,7 +110,7 @@ const Options = ({ title }) => {
               </div>
             </section>
             <section id="confluence-view" style={{ display: currentTab === 'confluence' ? 'block' : 'none' }}>
-              <div className="p-4 px-10 pb-9 w-full bg-white dark:bg-[#0B1120] rounded-lg">
+              <div className="p-4 px-10 pb-9 w-full bg-white dark:bg-[#0E172E] rounded-lg">
                 <form className="space-y-6" action="#">
                     <h5 className="text-xl font-medium text-gray-900 dark:text-white">Provide the Information</h5>
                     <div>
@@ -124,7 +124,7 @@ const Options = ({ title }) => {
                         type="text"
                         id="spaceNameInput"
                         name="confluenceSpaceName"
-                        className="bg-gray-50 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 border border-gray-300 dark:border-slate-700 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
+                        className="bg-gray-50 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 dark:text-white border border-gray-300 dark:border-slate-700 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
                         required
                       />
                     </div>
@@ -134,7 +134,7 @@ const Options = ({ title }) => {
               </div>
             </section>
             <section id="google_drive-view"  style={{ display: currentTab === 'google_drive' ? 'block' : 'none' }}>
-              <div className="p-4 px-10 pb-9 w-full bg-white dark:bg-[#0B1120] rounded-lg">
+              <div className="p-4 px-10 pb-9 w-full bg-white dark:bg-[#0E172E] rounded-lg">
                 <form className="space-y-6" action="#">
                   <h5 className="text-xl font-medium text-gray-900 dark:text-white">Provide Credentials for Google Drive</h5>
                 </form>
@@ -144,7 +144,7 @@ const Options = ({ title }) => {
         </div>
       </div>
 
-      <div className="absolute inset-0 bg-white dark:bg-[#0B1120] bg-[url(../../assets/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+      <div className="absolute inset-0 bg-white dark:bg-[#0B1120] bg-[url(../../assets/img/grid.svg)] bg-center"></div>
     </>
   );
 };
