@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { GithubFiles } from '../../containers/GithubFiles';
 import { GoogleDriveFiles } from '../../containers/GoogleDriveFiles';
-
 import { AtlassianData } from '../../containers/AtlassianData';
-
 import './Newtab.css';
 import './Newtab.scss';
 

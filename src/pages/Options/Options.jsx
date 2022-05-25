@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { loadFromLocal, saveToLocal } from '../../utils/localStorage';
-import Logo from '../../assets/img/clarifai-logo.jpeg';
+import { Navbar } from '../../components/Navbar/Navbar';
 import '../../assets/styles/tailwind.css';
 import './Options.css';
 
@@ -22,13 +22,10 @@ const Options = ({ title }) => {
 
   return (
     <>
-      <div className="relative z-10 max-w-4xl mx-auto mt-3 px-5 py-5 text-slate-800 dark:text-white">
-        <h1 className="text-4xl font-medium mb-10 flex items-end">
-          <img className="relative mr-2 w-40" src={Logo} alt="" id="logo" />
-          - Internal Docs Tool
-        </h1>
+      <div className="relative z-10 mx-auto text-slate-800 dark:text-white">
+        <Navbar isOptions />
 
-        <div className="flex flex-row w-full">
+        <div className="max-w-screen-md mx-auto px-5 relative z-10 flex flex-row w-full mt-7">
           <aside className="w-64" aria-label="Sidebar">
             <div className="overflow-y-auto py-4 pr-4 pb-20 border-r border-gray-200 dark:border-slate-800">
               <ul className="space-y-2">
