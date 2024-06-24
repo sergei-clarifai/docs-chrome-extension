@@ -111,7 +111,6 @@ export const GoogleDriveFiles = ({
           boxSizing: 'border-box',
           justifyContent: 'space-between',
           fontWeight: 600,
-          color: '#333',
           textDecoration: 'none',
           width: 300,
           minWidth: 300,
@@ -119,7 +118,7 @@ export const GoogleDriveFiles = ({
         }}
         href={file.webViewLink}
       >
-        <h3 className='title'>{file.name}</h3>
+        <h3 className='title text-slate-500 dark:text-white'>{file.name}</h3>
         <img
           src={file.thumbnailLink}
           alt={file.name}
